@@ -1,0 +1,18 @@
+<!-- quotes/templates/quotes/base.html -->
+{% load static %}
+<html>
+    <head>
+        <title>Hello, world!</title>
+        <link rel="stylesheet" href="{% static 'style-quotes.css' %}">
+    </head>
+    <body>
+        
+    {% block content %}
+    {% endblock %}
+    
+    <hr>
+    The current time is {{current_time}}.
+ 
+ 
+    </body>
+</html>

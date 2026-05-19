@@ -1,0 +1,21 @@
+<!-- quotes/templates/quotes/show_all.html -->
+{% extends 'quotes/base.html' %}
+ 
+ 
+{% block content %}
+ 
+ 
+ 
+ 
+<div>
+    <h1>All Quotes By The Cookie Monster</h1>
+    
+    {% for i in cookies %}
+        <li>{{i}}</li>
+    {% endfor %}
+ 
+ 
+</div>
+ 
+ 
+{% endblock %}
