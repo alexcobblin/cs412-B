@@ -1,6 +1,19 @@
 <!-- quotes/templates/quotes/base.html -->
 {% load static %}
 <html>
+    <nav>
+        <ul>
+            <li> 
+                <a href="{% url 'quote' %}">Home </a>
+            </li>
+            <li>
+                <a href="{% url 'about' %}">About Me </a>
+            </li>
+            <li>
+                <a href="{% url 'show_all' %}">All Quotes </a> 
+            </li>
+        </ul>
+    </nav>
     <head>
         <title>Hello, world!</title>
         <link rel="stylesheet" href="{% static 'style-quotes.css' %}">

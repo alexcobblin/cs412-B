@@ -9,10 +9,15 @@
  
 <div>
     <h1>All Quotes By The Cookie Monster</h1>
-    
-    {% for i in cookies %}
-        <li>{{i}}</li>
-    {% endfor %}
+    <body>
+        {% for j in images %}
+            <img src="{{j}}" alt="Monster">
+        {% endfor %}
+        
+        {% for i in cookies %}
+            <li>{{i}}</li>
+        {% endfor %}
+    </body>
  
  
 </div>

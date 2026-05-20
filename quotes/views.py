@@ -50,12 +50,18 @@ def quote(request):
               "Sometimes me think, what is friend? And then me say: a friend is someone to share last cookie with.",
               "I'd give you a cookie, but I ate it.", "Me Love to Eat Cookies. Sometimes eat whole, sometimes me chew it.",
               "Keep Calm & Eat Cookies"]
+    images = [
+        "https://i.scdn.co/image/ab6761610000e5eba3a7cba23d68a4e73c3b8155", "https://www.middlebury.edu/sites/default/files/2019-08/cookie-monster-portrait.jpg?fv=dkM5B0Io",
+        "https://cdn.britannica.com/66/218266-050-77C3D624/Cookie-Monster-Sesame-Street-2016.jpg",
+        "https://www.thetakeout.com/images/98ccfa6d03b97c79bafee62c57d8e47e.jpg"
+    ]
  
  
     # a dict of key/value pairs, to be available for use in template
     context = {
         'current_time': time.ctime(),
         'cookie': random.choice(quotes),
+        'monster': random.choice(images),
     }
  
  
@@ -71,12 +77,18 @@ def show_all(request):
               "Sometimes me think, what is friend? And then me say: a friend is someone to share last cookie with.",
               "I'd give you a cookie, but I ate it.", "Me Love to Eat Cookies. Sometimes eat whole, sometimes me chew it.",
               "Keep Calm & Eat Cookies"]
+    images = [
+        "https://i.scdn.co/image/ab6761610000e5eba3a7cba23d68a4e73c3b8155", "https://www.middlebury.edu/sites/default/files/2019-08/cookie-monster-portrait.jpg?fv=dkM5B0Io",
+        "https://cdn.britannica.com/66/218266-050-77C3D624/Cookie-Monster-Sesame-Street-2016.jpg",
+        "https://www.thetakeout.com/images/98ccfa6d03b97c79bafee62c57d8e47e.jpg"
+    ]
  
  
     # a dict of key/value pairs, to be available for use in template
     context = {
         'current_time': time.ctime(),
         'cookies': quotes,
+        'images' : images,
     }
  
  

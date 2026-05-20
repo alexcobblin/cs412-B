@@ -68,7 +68,12 @@ div.wrapper h1 {
     font-size: 2.4 em; 
 
 }
-
+img {
+    width: 400px;  /* Set your desired width */
+    height: 400px; /* Set your desired height */
+    object-fit: cover; /* Crops the image to fill the box without stretching */
+    object-position: center;
+}
 div.wrapper h2 {
     text-align: left;
     color: darkblue;
@@ -93,7 +98,7 @@ nav {
 
 nav li {
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 nav button {
