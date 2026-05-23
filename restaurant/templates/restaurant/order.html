@@ -1,0 +1,45 @@
+<!-- restaurant/templates/restaurant/order.html -->
+{% extends 'restaurant/base.html' %}
+ 
+ 
+{% block content %}
+<div>
+<h1>Contact Form</h1>
+ 
+
+<form action="{% url 'confirmation' %}" method="POST">
+    {% csrf_token %}
+    Name: <input type="text" name="name">
+    Phone: <input type="text" name="phone">
+    Email: <input type="text" name="email">
+    <p>
+        <input type="checkbox" id="{{pizza}}" name="checklist" value="{{pizza.0}},{{pizza.1}}">
+        <label>{{pizza.0}}: {{pizza.1}}$</label>
+        <ul>
+        {% for i in toppings %}
+                <input type="checkbox" id="{{i}}" name="checklist" value="{{i.0}},{{i.1}}">
+                <label>{{i.0}}: {{i.1}}$</label>
+
+        {% endfor %}
+        </ul>
+    </p>
+    {% for i in items %}
+    <li>
+        <input type="checkbox" id="{{i}}" name="checklist" value="{{i.0}},{{i.1}}">
+        <label>{{i.0}}: {{i.1}}$</label>
+
+        {% endfor %}
+    </li>
+    <p>Daily Special:</p>
+    <input type="checkbox" id="{{special}}" name="checklist" value="{{special.0}},{{special.1}}">
+    <label>{{special.0}}: {{special.1}}$</label>
+    <p>Any special instructions? <input type="text" name="special_instructions"></p>
+    <input type="submit">
+</form>
+ 
+ 
+ 
+ 
+</div>
+{% endblock %}
+ 

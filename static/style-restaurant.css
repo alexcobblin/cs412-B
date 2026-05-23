@@ -1,0 +1,315 @@
+/* style-quotes.css — Kung Fu Chops! */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Cinzel+Decorative:wght@700;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+
+/* ── TOKENS ───────────────────────────────────────────────── */
+:root {
+  --ink:       #1a0a00;
+  --paper:     #f5efe4;
+  --red:       #c0180c;
+  --red-deep:  #7a0d07;
+  --gold:      #c9922b;
+  --gold-lt:   #e8c56a;
+  --shadow:    rgba(26, 10, 0, 0.18);
+  --radius:    4px;
+}
+
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background-color: var(--ink);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(201, 146, 43, 0.07) 39px,
+      rgba(201, 146, 43, 0.07) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(201, 146, 43, 0.07) 39px,
+      rgba(201, 146, 43, 0.07) 40px
+    );
+  min-height: 100vh;
+}
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--ink);
+  background: transparent;
+  line-height: 1.7;
+}
+
+/* ── HEADER / NAV (lives in <head> in the template, styled globally) ── */
+head {
+  display: block;
+  background: var(--red-deep);
+  border-bottom: 4px solid var(--gold);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45);
+}
+
+/* The h1 in <head> acts as the site banner */
+head h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--gold-lt);
+  text-align: center;
+  padding: 0.6rem 2rem 0.2rem;
+  text-shadow:
+    2px 2px 0 var(--red-deep),
+    0 0 32px rgba(232, 197, 106, 0.4);
+}
+
+head nav {
+  display: flex;
+  justify-content: center;
+  padding: 0.35rem 0 0.5rem;
+}
+
+head nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+}
+
+head nav ul li a {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold-lt);
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+head nav ul li a:hover {
+  color: var(--ink);
+  background: var(--gold-lt);
+  border-color: var(--gold);
+}
+
+/* ── PAGE WRAPPER ─────────────────────────────────────────── */
+body {
+  background: var(--paper);
+  max-width: 860px;
+  margin: 2.5rem auto;
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 1px var(--gold),
+    0 8px 48px rgba(0,0,0,0.5);
+}
+
+/* ── CONTENT AREA ─────────────────────────────────────────── */
+body > div,
+body .content-wrapper {
+  padding: 2.5rem 3rem 3rem;
+}
+
+/* ── HEADINGS ─────────────────────────────────────────────── */
+h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 900;
+  color: var(--red);
+  letter-spacing: 0.05em;
+  border-bottom: 3px double var(--gold);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.2rem;
+  text-shadow: 1px 1px 0 rgba(192, 24, 12, 0.2);
+}
+
+h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--red-deep);
+  margin: 1.6rem 0 0.6rem;
+  letter-spacing: 0.03em;
+}
+
+/* ── PARAGRAPHS & LISTS ───────────────────────────────────── */
+p {
+  margin-bottom: 0.9rem;
+}
+
+li {
+  list-style: none;
+  padding: 0.25rem 0;
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+li::before {
+  content: '⚔';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.85em;
+}
+
+/* ── MAIN PAGE IMAGE ──────────────────────────────────────── */
+img {
+  display: block;
+  width: 100%;
+  max-height: 380px;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--gold);
+  border-radius: var(--radius);
+  margin: 1.2rem 0 1.6rem;
+  box-shadow: 4px 4px 0 var(--red-deep);
+}
+
+/* ── CONFIRMATION PAGE ────────────────────────────────────── */
+.confirmation-box {
+  background: #fff9f0;
+  border: 1px solid var(--gold);
+  border-left: 5px solid var(--red);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  margin-top: 1.2rem;
+}
+
+/* ── ORDER FORM ───────────────────────────────────────────── */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+form input[type="text"] {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  color: var(--ink);
+  background: #fff9f0;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.7rem;
+  margin-left: 0.4rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: min(260px, 100%);
+}
+
+form input[type="text"]:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px rgba(192, 24, 12, 0.15);
+}
+
+/* Labels next to contact fields */
+form > *:not(p):not(input[type="submit"]) {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* Checkbox rows */
+form input[type="checkbox"] {
+  accent-color: var(--red);
+  width: 1.1em;
+  height: 1.1em;
+  cursor: pointer;
+  margin-right: 0.3rem;
+}
+
+form label {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.97rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+form p {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: rgba(201, 146, 43, 0.07);
+  border: 1px dashed var(--gold);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+}
+
+form ul {
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+form ul li::before { content: none; }
+
+form input[type="submit"] {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  background: var(--red);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.65rem 2rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  align-self: flex-start;
+  box-shadow: 3px 3px 0 var(--red-deep);
+  transition: background 0.2s, transform 0.1s, box-shadow 0.1s;
+}
+
+form input[type="submit"]:hover {
+  background: var(--red-deep);
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--red-deep);
+}
+
+form input[type="submit"]:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+/* ── DECORATIVE DIVIDER ───────────────────────────────────── */
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 2rem 0;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  body {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  body > div,
+  body .content-wrapper {
+    padding: 1.5rem 1.2rem 2rem;
+  }
+
+  head h1 {
+    font-size: 1.3rem;
+    padding: 0.5rem 1rem 0.15rem;
+  }
+
+  head nav ul {
+    gap: 1.2rem;
+  }
+}

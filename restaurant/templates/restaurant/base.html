@@ -1,0 +1,27 @@
+<!-- restaurant/templates/restaurant/base.html -->
+{% load static %}
+<html>
+    <head>
+        <title>Kung Fu Chops!</title>
+        <link rel="stylesheet" href="{% static 'style-restaurant.css' %}">
+        <h1>Kung Fu Chops!</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'main' %}"> Home </a>
+                </li>
+                <li>
+                    <a href="{% url 'order' %}"> Menu </a>
+                </li>
+            </ul>
+        </nav>
+    </head>
+    <body>
+        
+    {% block content %}
+    {% endblock %}
+    
+ 
+ 
+    </body>
+</html>
