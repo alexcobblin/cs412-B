@@ -1,0 +1,24 @@
+<!-- quotes/templates/quotes/base.html -->
+{% load static %}
+<html>
+    <nav>
+        <ul>
+            <li> 
+                <a href="{% url 'random' %}">Home </a>
+            </li>
+            <li>
+                <a href="{% url 'show_all' %}">All Profiles </a>
+            </li>
+    </nav>
+    <head>
+        <title>Mini Insta</title>
+        <link rel="stylesheet" href="{% static 'style-mini_insta.css' %}">
+    </head>
+    <body>
+        
+    {% block content %}
+    {% endblock %}
+ 
+ 
+    </body>
+</html>
