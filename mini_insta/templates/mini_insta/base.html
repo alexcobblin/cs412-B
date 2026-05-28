@@ -1,13 +1,18 @@
-<!-- quotes/templates/quotes/base.html -->
+<!--
+mini_insta/templates/mini_insta/base.html 
+File: base.html
+Author: Alex Cobb (alcobb@bu.edu), 5/28/2006
+Description: The base file holding the nav and bare necessities on each page
+-->
 {% load static %}
 <html>
     <nav>
         <ul>
             <li> 
-                <a href="{% url 'random' %}">Home </a>
+                <a href="{% url 'show_all' %}">Home </a>
             </li>
             <li>
-                <a href="{% url 'show_all' %}">All Profiles </a>
+                <a href="{% url 'random' %}"> Random Profile </a>
             </li>
     </nav>
     <head>
@@ -21,4 +26,7 @@
  
  
     </body>
+    <li> 
+        <a href="{% url 'show_all' %}">Home </a>
+    </li>
 </html>

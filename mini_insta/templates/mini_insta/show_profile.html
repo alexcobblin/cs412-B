@@ -1,3 +1,10 @@
+<!--
+mini_insta/templates/mini_insta/show_profile.html 
+File: show_profile.html
+Author: Alex Cobb (alcobb@bu.edu), 5/28/2006
+Description: Shows a single profile an a larger format
+-->
+
 {% extends 'mini_insta/base.html' %}
 
 
@@ -18,6 +25,13 @@
         </small>
 
         <p>{{profile.bio_text}}</p>
+
+
+    </div>
+
+    <div class="stats">
+        <small>Followers: </small>
+        <small>Following: </small>
     </div>
 </profile>
 <main>

@@ -1,3 +1,10 @@
+<!--
+mini_insta/templates/mini_insta/base.html 
+File: show_all.html
+Author: Alex Cobb (alcobb@bu.edu), 5/28/2006
+Description: An html page with a for loop that generates a card for each profile
+-->
+
 {% extends 'mini_insta/base.html' %}
 
 <h1>Showing all Profiles</h1>
@@ -15,10 +22,17 @@
             {% endif %}
 
             <h3>{{a.display_name}}</h3>
-
+            
         </a>
         <small>{{a.username}} joined {{a.join_date}}</small>
+    <!--
+    <div class="stats">
+        <small>Following:</small>
+        <small>Followers:</small>
     </div>
+    -->
+    </div>
+    
  
     {% endfor %}
 </div>

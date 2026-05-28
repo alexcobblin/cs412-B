@@ -1,3 +1,7 @@
+# File: views.py
+# Author: Alex Cobb (alcobb@bu.edu), 5/28/2006
+# Description: The views file with a view for each page
+
 from django.shortcuts import render
 from .models import Profile
 from django.views.generic import ListView, DetailView

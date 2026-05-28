@@ -1,3 +1,7 @@
+# File: models.py
+# Author: Alex Cobb (alcobb@bu.edu), 5/28/2006
+# Description: The models file with each of our database templates
+
 from django.db import models
 
 # Create your models here.

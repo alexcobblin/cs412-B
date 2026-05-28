@@ -349,7 +349,7 @@ a:hover { color: var(--amber); }
 
   align-items: center;
 
-  min-height: 430px;
+  min-height: 300px;
 }
 
 .profile-card a {
@@ -396,4 +396,14 @@ a:hover { color: var(--amber); }
   margin-top: auto;
 
   text-align: center;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats{
+  margin-top: auto;
+  margin-left: 1%;
 }
