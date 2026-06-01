@@ -34,5 +34,22 @@ Description: Shows a single profile an a larger format
         <small>Following: </small>
     </div>
 </profile>
+<h2>Posts</h2>
+    <!-- Posts:
+    {{profile.get_all_posts}} -->
+ 
+    {% for post in profile.get_all_posts %}
+    <a href="{% url 'post' post.pk %}">
+    <post>
+        <div>
+        <h1>{{post.profile.username}}</h1>
+        <strong>{{post.caption}}</strong>
+        {% for photo in post.get_all_photos %}
+            <img src="{{ photo.get_image_url }}" alt="photo">
+        {% endfor %}
+        </div>
+    </post>
+    </a>
+    {% endfor %}
 <main>
 {% endblock %}

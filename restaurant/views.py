@@ -15,7 +15,7 @@ def order(request):
     menu_items = [("Chop Suey", 6.29), ("Sushi", 13.99), ("Pastrami", 8.50)]
     specials = [("Concrete Block", 1.50), ("Wood Block", 2.50), ("Wheelchair (not in use)", 47.50)]
     toppings = [("Pepperoni", 1.50), ("Mushrooms", 0.50), ("Sausage", 1.50)]
-    pizza = ("Pizza", 14.99)
+    pizza = ("Cheese Pizza", 14.99)
     context = {
         'items': menu_items,
         'special': random.choice(specials),

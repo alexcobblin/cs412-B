@@ -9,22 +9,25 @@ Description: The base file holding the nav and bare necessities on each page
     <nav>
         <ul>
             <li> 
-                <a href="{% url 'show_all' %}">Home </a>
+                <a href="{% url 'show_all' %}">Home</a>
             </li>
             <li>
-                <a href="{% url 'random' %}"> Random Profile </a>
+                <a href="{% url 'random' %}">Random Profile</a>
             </li>
+            {% if profile %}
+            <li>
+                <a href="{% url 'create_post' profile.pk %}">Create Post</a>
+            </li>
+            {% endif %}
+        </ul>
     </nav>
     <head>
         <title>Mini Insta</title>
         <link rel="stylesheet" href="{% static 'style-mini_insta.css' %}">
     </head>
     <body>
-        
-    {% block content %}
-    {% endblock %}
- 
- 
+        {% block content %}
+        {% endblock %}
     </body>
     <li> 
         <a href="{% url 'show_all' %}">Home </a>

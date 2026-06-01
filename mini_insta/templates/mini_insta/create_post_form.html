@@ -1,0 +1,25 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1>Create a new Post</h1>
+
+<form method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+    {% for field in form %}
+    <tr>
+        <th>{{ field.label }}</th>
+        <td>{{ field }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+    <th>Images</th>
+        <td><input type="file" name="files" multiple></td>
+    </tr>
+    <tr>
+        <td><a href="{% url 'profile' profile.pk %}">← Cancel</a></td>
+        <td><input type='submit' value='Submit'></td>
+    </tr>
+    </table>
+</form>
+{% endblock %}

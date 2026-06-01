@@ -1,0 +1,29 @@
+<!--
+mini_insta/templates/mini_insta/base.html 
+File: show_post.html
+Author: Alex Cobb (alcobb@bu.edu), 5/28/2006
+Description: An html page that shows a post and loops to show each photo
+-->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<div class="post-detail">
+    <div class="post-detail-photos">
+        {% for photo in post.get_all_photos %}
+            <img src="{{ photo.get_image_url }}" alt="photo">
+        {% endfor %}
+    </div>
+
+    <div class="post-detail-info">
+        <a href="{% url 'profile' post.profile.pk %}">
+            <h1>{{ post.profile.username }}</h1>
+        </a>
+        <strong>{{ post.caption }}</strong>
+        <small>{{ post.timestamp }}</small>
+        <a href="{% url 'profile' post.profile.pk %}" class="back-link">← Back to {{ post.profile.username }}'s profile</a>
+    </div>
+</div>
+
+{% endblock %}
