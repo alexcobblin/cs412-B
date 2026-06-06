@@ -1,0 +1,34 @@
+<!--
+mini_insta/templates/mini_insta/show_feed.html 
+File: show_feed.html
+Author: Alex Cobb (alcobb@bu.edu), 4/6/2006
+Description: THe page that displays the feed relative to who the user follows
+-->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+    <h2>Posts</h2>
+    <!-- Posts:
+    {{profile.get_all_posts}} -->
+ 
+    {% for post in profile.get_post_feed %}
+    <a href="{% url 'post' post.pk %}">
+    <post>
+        <div>
+        <h1>{{post.profile.username}}</h1>
+        <p style="text-indent: 15px;"><small> {{ post.stylish_likes }}</small></p>
+        <strong>{{post.caption}}</strong>
+        {% for photo in post.get_all_photos %}
+            <img src="{{ photo.get_image_url }}" alt="photo">
+        {% endfor %}
+        </div>
+        <a href="{% url 'delete_post' post.pk %}">Delete</a>
+    </post>
+    </a>
+    {% empty %}
+    <a href="{% url 'show_all' %}">
+        You aren't following anyone, click here to explore accounts!
+    </a>
+    {% endfor %}
+    
+{% endblock %}

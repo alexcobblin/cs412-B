@@ -1,0 +1,40 @@
+<!--
+mini_insta/templates/mini_insta/update_profile_form.html 
+File: update_profile_form.html
+Author: Alex Cobb (alcobb@bu.edu), 26/5/2006
+Description: A form populated with information of a profile you'd like to change
+-->
+{% extends 'mini_insta/base.html' %}
+ 
+ 
+{% block content %}
+<h2>Update a Profile</h2>
+ 
+ 
+<form method = 'POST' enctype="multipart/form-data">
+<!-- talk about CSRF -->
+{% csrf_token %}
+ 
+ 
+<!-- customized table version here -->
+ 
+ 
+{% csrf_token %}
+    <table>
+    {% for field in form %}
+    <tr>
+        <th>{{field.name}}</th>
+        <td>{{field}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td>
+            <input type='submit' name = 'update_article' value= 'Update Article!'>
+        </td>
+        <td><a href="{% url 'profile' profile.pk %}">← Cancel</a></td>
+    </tr>
+    </table>
+</form>
+ 
+{% endblock %}

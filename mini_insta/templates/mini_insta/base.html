@@ -18,7 +18,22 @@ Description: The base file holding the nav and bare necessities on each page
             <li>
                 <a href="{% url 'create_post' profile.pk %}">Create Post</a>
             </li>
+            <li>
+                <a href="{% url 'feed' profile.pk %}">Feed</a>
+            </li>
+            <li>
+                <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+            </li>
+            <li>
+            <a href="{% url 'search' pk=profile.pk %}"> Search </a>
+            </li>
             {% endif %}
+            {% if post %}
+            <li>
+                <a href="{% url 'update_post' post.pk %}">Update Post</a>
+            </li>
+            {% endif %}
+
         </ul>
     </nav>
     <head>

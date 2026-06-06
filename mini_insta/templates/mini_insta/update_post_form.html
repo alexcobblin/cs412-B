@@ -1,0 +1,40 @@
+<!--
+mini_insta/templates/mini_insta/update_post_form.html 
+File: update_post_form.html
+Author: Alex Cobb (alcobb@bu.edu), 26/5/2006
+Description: A form populated with information of a post you'd like to change
+-->
+{% extends 'mini_insta/base.html' %}
+ 
+ 
+{% block content %}
+<h2>Update a Post</h2>
+ 
+ 
+<form method = 'POST' enctype="multipart/form-data">
+<!-- talk about CSRF -->
+{% csrf_token %}
+ 
+ 
+<!-- customized table version here -->
+ 
+ 
+{% csrf_token %}
+    <table>
+    {% for field in form %}
+    <tr>
+        <th>{{field.name}}</th>
+        <td>{{field}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td>
+            <input type='submit' name = 'update_post' value= 'Update Post!'>
+        </td>
+        <td><a href="{% url 'post' post.pk %}">← Cancel</a></td>
+    </tr>
+    </table>
+</form>
+ 
+{% endblock %}

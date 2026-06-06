@@ -1,0 +1,15 @@
+<!--
+mini_insta/templates/mini_insta/search.html 
+File: search.html 
+Author: Alex Cobb (alcobb@bu.edu), 6/6/2006
+Description: A simple query html file to respond to a search input
+-->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h2>Search</h2>
+<form action="" method="GET">
+    <input type="text" name="query" placeholder="Search profiles and posts..." />
+    <button type="submit">Search</button>
+</form>
+{% endblock %}

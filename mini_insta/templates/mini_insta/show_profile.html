@@ -30,8 +30,12 @@ Description: Shows a single profile an a larger format
     </div>
 
     <div class="stats">
-        <small>Followers: </small>
-        <small>Following: </small>
+        <a href="{% url 'followers' profile.pk %}">
+            <small>Followers: {{profile.get_num_followers}} </small>
+        </a>
+        <a href="{% url 'following' profile.pk %}">
+        <small>Following: {{profile.get_num_following}}</small>
+        </a>
     </div>
 </profile>
 <h2>Posts</h2>
@@ -48,6 +52,7 @@ Description: Shows a single profile an a larger format
             <img src="{{ photo.get_image_url }}" alt="photo">
         {% endfor %}
         </div>
+        <a href="{% url 'delete_post' post.pk %}">Delete</a>
     </post>
     </a>
     {% endfor %}

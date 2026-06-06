@@ -20,10 +20,19 @@ Description: An html page that shows a post and loops to show each photo
         <a href="{% url 'profile' post.profile.pk %}">
             <h1>{{ post.profile.username }}</h1>
         </a>
+        <small> {{ post.stylish_likes }}</small>
         <strong>{{ post.caption }}</strong>
         <small>{{ post.timestamp }}</small>
+        <ul>
+        <a href="{% url 'delete_post' post.pk %}"><h1>Delete</h1></a>
+        </ul>
         <a href="{% url 'profile' post.profile.pk %}" class="back-link">← Back to {{ post.profile.username }}'s profile</a>
     </div>
+</div>
+<div class="post-detail">
+    {% for comment in post.get_all_comments %}
+        <strong>{{ comment.text }} - {{ comment.profile.display_name }} </strong>
+    {% endfor %}
 </div>
 
 {% endblock %}

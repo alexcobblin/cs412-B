@@ -1,0 +1,20 @@
+<!--
+mini_insta/templates/mini_insta/show_followers.html 
+File: show_followers.html
+Author: Alex Cobb (alcobb@bu.edu), 4/6/2006
+Description: A simple page to list each follower
+-->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1>Followers of {{ profile.display_name }}</h1>
+
+<ul>
+{% for follower in profile.get_all_followers %}
+    <li>{{ follower }}</li>
+{% empty %}
+    <li>No followers yet.</li>
+{% endfor %}
+</ul>
+<td><a href="{% url 'profile' profile.pk %}"> Back </a></td>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!--
+mini_insta/templates/mini_insta/show_following.html 
+File: show_following.html
+Author: Alex Cobb (alcobb@bu.edu), 4/6/2006
+Description: A simple page to list each user following a profile
+-->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1>{{ profile.display_name }} is following</h1>
+
+<ul>
+{% for following in profile.get_following %}
+    <li>{{ following }}</li>
+{% empty %}
+    <li>Not following anyone yet.</li>
+{% endfor %}
+</ul>
+<td><a href="{% url 'profile' profile.pk %}"> Back </a></td>
+{% endblock %}
