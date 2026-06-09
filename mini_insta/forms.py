@@ -27,5 +27,8 @@ class UpdateProfileForm(forms.ModelForm):
         '''associate this form with the Profile model.'''
         model = Profile
         fields = ['display_name', 'profile_image_url', 'bio_text']
- 
-## write the UpdateArticleView
+
+class CreateProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['username', 'display_name', 'bio_text', 'profile_image_url']

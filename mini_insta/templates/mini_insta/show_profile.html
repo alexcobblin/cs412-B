@@ -36,6 +36,13 @@ Description: Shows a single profile an a larger format
         <a href="{% url 'following' profile.pk %}">
         <small>Following: {{profile.get_num_following}}</small>
         </a>
+        {% if user.is_authenticated and profile != logged_in_profile %}
+        {% if is_following %}
+            <a href="{% url 'delete_follow' profile.pk %}">Unfollow</a>
+        {% else %}
+        <a href="{% url 'follow' profile.pk %}">Follow</a>
+        {% endif %}
+        {% endif %}
     </div>
 </profile>
 <h2>Posts</h2>

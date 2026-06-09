@@ -1,0 +1,10 @@
+<!-- mini_insta/templates/mini_insta/logout.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1>Logout</h1>
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Log out</button>
+</form>
+{% endblock %}

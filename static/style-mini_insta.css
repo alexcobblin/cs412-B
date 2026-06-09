@@ -696,3 +696,29 @@ form table td a:hover {
     border-top: 1px solid var(--sand);
   }
 }
+nav form button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.825rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  padding: 0.25rem 1rem;
+  transition: color var(--transition);
+}
+
+nav form button:hover {
+  color: var(--ink);
+}
+nav form {
+  max-width: none;
+  margin: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
