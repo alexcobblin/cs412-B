@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'quotes',
     'restaurant',
     'mini_insta',
+    'dadjokes',
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,11 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/alcobb/static/'
     MEDIA_URL = '/alcobb/media/'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ]
+}

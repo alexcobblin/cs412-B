@@ -1,0 +1,10 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+
+{% for i in jokes %}
+
+<p>{{i.text}} - {{i.name}}</p>
+{% endfor %}
+
+{% endblock %}

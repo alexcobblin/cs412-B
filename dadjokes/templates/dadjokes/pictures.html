@@ -1,0 +1,10 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+
+{% for i in pictures %}
+<img src="{{i.image_url}}" alt="{{i.image_url}}">
+<a> - {{i.name}}</a>
+{% endfor %}
+
+{% endblock %}
