@@ -3,12 +3,6 @@ from django.conf import settings
 from . import views
 from .views import *
  
-router = routers.DefaultRouter()
-router.register(r"rest-pictures", PictureViewSet)
-router.register(r"rest-jokes", JokeViewSet)
-
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
  
 urlpatterns = [ 
     path(r'joke/<int:pk>', JokeView.as_view(), name="joke"),
@@ -16,7 +10,13 @@ urlpatterns = [
     path(r'picture/<int:pk>', PictureView.as_view(), name="picture"),
     path(r'pictures', views.PicturesView, name="pictures"),
     path(r'', views.random_view, name="random"),
-    path("", include(router.urls)),
-    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    
+    path('api/', JokeViewSet.as_view({'get': 'random_joke'})),
+    path('api/random', JokeViewSet.as_view({'get': 'random_joke'})),
+    path('api/jokes', JokeViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path('api/joke/<int:pk>', JokeViewSet.as_view({'get': 'retrieve'})),
+    path('api/pictures', PictureViewSet.as_view({'get': 'list'})),
+    path('api/picture/<int:pk>', PictureViewSet.as_view({'get': 'retrieve'})),
+    path('api/random_picture', PictureViewSet.as_view({'get': 'random_picture'})),
 ]
 '''path(r'', RandomDetailView.as_view(), name="random"),'''

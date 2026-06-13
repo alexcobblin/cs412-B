@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Joke, Picture
 import random
 from rest_framework import routers, serializers, viewsets
+from rest_framework.response import Response
+import random
+
 
 # Create your views here.
 
@@ -50,6 +53,12 @@ class JokeViewSet(viewsets.ModelViewSet):
     queryset = Joke.objects.all()
     serializer_class = JokeSerializer
 
+    def random_joke(self, request):
+        joke = random.choice(list(Joke.objects.all()))
+        serializer = self.get_serializer(joke)
+        return Response(serializer.data)
+
+
 class PictureSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Picture
@@ -60,3 +69,8 @@ class PictureSerializer(serializers.HyperlinkedModelSerializer):
 class PictureViewSet(viewsets.ModelViewSet):
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
+
+    def random_picture(self, request):
+        picture = random.choice(list(Picture.objects.all()))
+        serializer = self.get_serializer(picture)
+        return Response(serializer.data)
