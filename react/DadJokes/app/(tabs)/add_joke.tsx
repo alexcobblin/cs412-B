@@ -1,7 +1,7 @@
 // DadJokes/app/(tabs)/add_joke.tsx
 import { useState } from 'react';
 import { Text, TextInput, Pressable, ScrollView, Alert } from 'react-native';
-import { styles } from '../../assets/my_styles';
+import { styles } from '../../assets/my-styles';
 import { BASE_URL } from '../../assets/config';
 
 export default function AddJokeScreen() {

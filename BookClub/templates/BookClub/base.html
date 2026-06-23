@@ -1,0 +1,17 @@
+<!--
+BookClub/templates/BookClub/base.html 
+File: base.html
+Author: Alex Cobb (alcobb@bu.edu), 6/18/2006
+Description: The base file holding the nav and bare necessities on each page
+-->
+{% load static %}
+<html>
+    <head>
+        <title>Mini Insta</title>
+        <link rel="stylesheet" href="{% static 'bookClub-style.css' %}">
+    </head>
+    <body>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

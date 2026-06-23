@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'restaurant',
     'mini_insta',
     'dadjokes',
+    'BookClub',
     "rest_framework",
 ]
 
