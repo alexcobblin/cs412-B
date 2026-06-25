@@ -63,18 +63,16 @@ class Book(models.Model):
         '''Return a string representation of this Book object.'''
         return f'{self.book_name}'
     
-    def get_all_comments(self):
-        '''Return all of the comments associated with this Post.'''
-        comments = Comment.objects.filter(book=self).order_by('page_num')
-        print(comments)
+    def get_comments_by_pgnum(self, pg):
+        comments = Comment.objects.filter(book=self, page_num=pg)
         com_list = list(comments)
-        for i in com_list:
+        for i in list(com_list):
             replies = list(i.get_replies())
             for j in replies:
-                print(j)
                 com_list.remove(j)
-                com_list.insert((com_list.index(j.reply) + 1), j)
-        return comments
+                com_list.insert(com_list.index(i) + 1, j)
+        return com_list
+    
     def get_all_reviews(self):
         '''Return all of the reviews associated with this Post.'''
         reviews = Review.objects.filter(book=self)
@@ -94,12 +92,12 @@ class Book(models.Model):
     def get_absolute_url(self):
         '''Return the URL to display one instance of this model.'''
         return reverse('book', kwargs={'pk':self.pk})
-    def unique_page_nums(self):
+    def get_unique_page_nums(self):
         nums = []
         for i in Comment.objects.filter(book=self):
             if i.page_num not in nums:
                 nums.append(i.page_num)
-        return nums
+        return sorted(nums)
 
 class Follow(models.Model):
     '''Encapsulate the idea of a follow.'''

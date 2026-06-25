@@ -1,0 +1,14 @@
+{% extends 'BookClub/base.html' %}
+{% block content %}
+
+<div class="auth-box">
+  <h2>Edit Profile</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+  </form>
+  <a href="{% url 'reader' object.pk %}">Cancel</a>
+</div>
+
+{% endblock %}

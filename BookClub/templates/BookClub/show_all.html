@@ -2,27 +2,24 @@
 
 {% block content %}
 
-<h1>Showing all books</h1>
-
 <div class="book-list">
   {% for a in books %}
   <a class="book-card-link" href="{% url 'book' a.pk %}">
   <div class="book-card">
-
     <div class="book-image-col">
       {% if a.image_file %}
-        <img class="book-image" src="{{ a.image_file.url }}" alt="{{ a.title }} cover">
+        <img class="book-image" src="{{ a.image_file.url }}" alt="{{ a.book_name }} cover">
       {% else %}
         <div class="book-image-placeholder">📖</div>
       {% endif %}
       <small class="book-rating">Rating: {{ a.stylish_reviews }}</small>
     </div>
-
     <p class="book-title">{{ a.book_name }}</p>
     <p class="book-description">{{ a.description }}</p>
-
   </div>
   </a>
+  {% empty %}
+  <p>No books found.</p>
   {% endfor %}
 </div>
 

@@ -1,0 +1,13 @@
+{% extends 'BookClub/base.html' %}
+{% block content %}
+
+<div class="auth-box">
+  <h2>Edit Review</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+</div>
+
+{% endblock %}

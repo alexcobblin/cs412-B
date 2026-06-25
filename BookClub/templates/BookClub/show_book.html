@@ -1,47 +1,122 @@
 {% extends 'BookClub/base.html' %}
-
+{% load page_extras %}
 {% block content %}
+
 <div class="book-card">
-
-    <div class="book-image-col">
-      {% if book.image_file %}
-        <img class="book-image" src="{{ book.image_file.url }}" alt="{{ book.title }} cover">
-      {% else %}
-        <div class="book-image-placeholder">📖</div>
-      {% endif %}
-      <small class="book-rating">Rating: {{ book.stylish_reviews }}</small>
-    </div>
-
-    <p class="book-title">{{ book.book_name }}</p>
-    <p class="book-description">{{ book.description }}</p>
-
+  <div class="book-image-col">
+    {% if book.image_file %}
+      <img class="book-image" src="{{ book.image_file.url }}" alt="{{ book.title }} cover">
+    {% else %}
+      <div class="book-image-placeholder">📖</div>
+    {% endif %}
+    <small class="book-rating">Rating: {{ book.stylish_reviews }}</small>
   </div>
-  
-  <div class="review_box">
-    {% for review in book.get_all_reviews %}
-    <div class="review">
-    <p>{{review.reader.username}} - {{review.text}}</p>
-    <small>{{review.stars}} / 10</small>
-    </div>
-    {% endfor %}
-  </div>
+  <p class="book-title">{{ book.book_name }}</p>
+  <p class="book-description">{{ book.description }}</p>
+</div>
 
-  <div class="comment_box">
-    {% for comment in book.get_all_comments %}
+<div class="review_box">
+  {% for review in book.get_all_reviews %}
+  <div class="review">
+    <a href="{% url 'reader' review.reader.pk %}">{{ review.reader.username }}</a> - {{ review.text }}
+    <small>{{ review.stars }} / 10</small>
+
+    {% if review.reader == reader %}
+    <div class="review-actions">
+      <a href="{% url 'edit_review' review.pk %}" class="comment-trigger">Edit</a>
+      <form method="POST" action="{% url 'delete_review' review.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="delete-btn">Delete</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  {% if reader and not reader_has_review %}
+  <form method="POST" action="{% url 'create_review' book.pk %}">
+    {% csrf_token %}
+    {{ review_form.as_p }}
+    <button type="submit">Submit Review</button>
+  </form>
+  {% endif %}
+</div>
+
+<form method="GET" class="search-form">
+  <input
+    type="text"
+    name="page_search"
+    placeholder="Search page number..."
+    value="{{ search }}"
+  >
+  <button type="submit">Search</button>
+</form>
+
+{% if reader %}
+<div class="new-page-comment">
+  <form method="POST" action="{% url 'create_comment' book.pk %}">
+    {% csrf_token %}
+    <input type="number" name="page_num" placeholder="Page number...">
+    <input type="text" name="text" placeholder="Add a comment...">
+    <input type="hidden" name="reply" value="">
+    <button type="submit">Comment</button>
+  </form>
+</div>
+{% endif %}
+
+<div class="comment_box">
+  {% for page, comments in pages %}
+
+  <details class="tab" data-page="{{ page }}">
+    <summary>Page {{ page }}</summary>
+
+    {% for comment in comments %}
+
+    <div class="comment {% if comment.reply %}reply{% endif %}">
+      <strong>
+        <a href="{% url 'reader' comment.reader.pk %}">{{ comment.reader.display_name }}</a>
+      </strong>
       {% if comment.reply %}
-        <div class="reply">
-        <p>{{comment.reader.username}} - {{comment.text}}</p>
-        <small>{{comment.stylish_likes}} {{comment.stylish_dislikes}} - page {{comment.page_num}}</small>
-        </div>
-      {% else %}
-      <div class="comment">
-        <p>{{comment.reader.username}} - {{comment.text}}</p>
-        <small>{{comment.stylish_likes}} {{comment.stylish_dislikes}} - page {{comment.page_num}}</small>
-      </div>
+      <small class="reply-label">↩ replying to {{ comment.reply.reader.display_name }}</small>
       {% endif %}
+      <p>{{ comment.text }}</p>
+      <span>{{ comment.stylish_likes }} {{ comment.stylish_dislikes }}</span>
+
+      {% if reader %}
+      <form method="POST" action="{% url 'create_comment' book.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="page_num" value="{{ comment.page_num }}">
+        <input type="hidden" name="reply" value="{{ comment.pk }}">
+        <input type="text" name="text" placeholder="Reply...">
+        <button type="submit">Reply</button>
+      </form>
+
+      {% if comment.reader == reader %}
+      <form method="POST" action="{% url 'delete_comment' comment.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="delete-btn">Delete</button>
+      </form>
+      {% endif %}
+      {% endif %}
+
+    </div>
+    {% empty %}
+    <p>No comments on this page.</p>
     {% endfor %}
-  </div>
 
+    {% if reader %}
+    <form method="POST" action="{% url 'create_comment' book.pk %}">
+      {% csrf_token %}
+      <input type="hidden" name="page_num" value="{{ page }}">
+      <input type="hidden" name="reply" value="">
+      <input type="text" name="text" placeholder="Add a comment on page {{ page }}...">
+      <button type="submit">Comment</button>
+    </form>
+    {% endif %}
 
+  </details>
+
+  {% endfor %}
+</div>
 
 {% endblock %}

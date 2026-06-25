@@ -1,153 +1,625 @@
+/* ============================================================
+   BookClub Stylesheet
+   Author: Alex Cobb (alcobb@bu.edu)
+   ============================================================ */
 
-.book-list {
-display: flex;
-flex-direction: column;
-gap: 1.5rem;
-padding: 1rem 0;
+/* --- Base & Reset --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f4f4f0;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+/* --- Nav --- */
+nav {
+  background: #fff;
+  border-bottom: 1px solid #e8e8e5;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #3498db;
+  font-size: 0.95rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav span {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+nav form {
+  margin: 0;
+}
+
+nav button {
+  background: none;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+nav button:hover {
+  background: #f4f4f0;
+}
+
+/* --- Page Wrapper --- */
+.page-content {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: #1a1a1a;
+}
+
+/* --- Book List --- */
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+/* --- Book Card --- */
 .book-card {
-display: grid;
-grid-template-columns: 140px 1fr;
-grid-template-rows: auto 1fr;
-gap: 12px 20px;
-background: #fff;
-border: 1px solid #e8e8e5;
-border-radius: 12px;
-padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 12px 20px;
+  background: #fff;
+  border: 1px solid #e8e8e5;
+  border-radius: 12px;
+  padding: 1.25rem;
 }
 
 .book-image-col {
-grid-row: 1 / 3;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 10px;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .book-image-placeholder {
-width: 120px;
-height: 170px;
-border-radius: 8px;
-background: #f4f4f0;
-border: 1px solid #e8e8e5;
-display: flex;
-align-items: center;
-justify-content: center;
-color: #aaa;
-font-size: 2rem;
+  width: 120px;
+  height: 170px;
+  border-radius: 8px;
+  background: #f4f4f0;
+  border: 1px solid #e8e8e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 2rem;
 }
 
 .book-image {
-width: 120px;
-height: 170px;
-object-fit: cover;
-border-radius: 8px;
-border: 1px solid #e8e8e5;
+  width: 120px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e8e8e5;
 }
 
 .book-rating {
-font-size: 13px;
-color: #666;
-text-align: center;
+  font-size: 13px;
+  color: #666;
+  text-align: center;
 }
 
 .book-title {
-font-size: 16px;
-font-weight: 500;
-margin: 0;
-color: #1a1a1a;
-text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-decoration: none;
 }
 
 .book-description {
-font-size: 14px;
-color: #555;
-line-height: 1.7;
-margin: 0;
-text-decoration: none;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  text-decoration: none;
 }
+
 a.book-card-link {
   text-decoration: none;
   color: inherit;
   display: block;
 }
-/* --- Side-by-Side Flex Layout for Reviews & Comments --- */
-/* This targets the sibling containers directly using CSS positioning */
-.review_box, .comment_box {
-    display: block;
-    box-sizing: border-box;
-    vertical-align: top;
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 20px;
+
+/* --- Book Detail: Reviews & Comments Side-by-Side --- */
+.review_box,
+.comment_box {
+  display: block;
+  box-sizing: border-box;
+  vertical-align: top;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
 }
 
-/* Float or flex arrangement depending on your existing container wrapper. 
-   If they share a parent, this keeps them beautifully in a 40% / 60% split: */
 @media (min-width: 768px) {
-    .review_box {
-        float: left;
-        width: 38%;
-        margin-right: 2%;
-    }
-    .comment_box {
-        float: left;
-        width: 60%;
-    }
-    /* Clearfix for floats */
-    .book-card::after, .comment_box::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
+  .review_box {
+    float: left;
+    width: 38%;
+    margin-right: 2%;
+  }
+
+  .comment_box {
+    float: left;
+    width: 60%;
+  }
+
+  .review_box::after,
+  .comment_box::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
 }
 
-/* --- Reviews Items (Left Column) --- */
+/* --- Reviews --- */
 .review {
-    background: #ffffff;
-    border-left: 4px solid #3498db;
-    padding: 14px;
-    margin-bottom: 12px;
-    border-radius: 0 8px 8px 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  background: #fff;
+  border-left: 4px solid #3498db;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .review p {
-    margin: 0 0 6px 0;
-    color: #2c3e50;
-    font-size: 0.95rem;
+  margin: 0 0 6px 0;
+  color: #2c3e50;
+  font-size: 0.95rem;
 }
 
 .review small {
-    color: #7f8c8d;
-    font-weight: bold;
+  color: #7f8c8d;
+  font-weight: bold;
 }
 
-/* --- Comments & Replies Items (Right Column) --- */
-.comment, .reply {
-    background: #ffffff;
-    padding: 14px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    border: 1px solid #eef2f5;
-}
-
-.comment p, .reply p {
-    margin: 0 0 6px 0;
-    color: #2c3e50;
-    font-size: 0.95rem;
-}
-
-.comment small, .reply small {
-    color: #95a5a6;
-    font-size: 0.85rem;
-}
-
-/* Threaded indent for replies inside comment box */
+/* --- Comments & Replies --- */
+.comment,
 .reply {
-    margin-left: 30px;
-    background: #fafbfc;
-    border-left: 3px solid #bdc3c7;
+  background: #fff;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  border: 1px solid #eef2f5;
+}
+
+.comment p,
+.reply p {
+  margin: 0 0 6px 0;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+.comment small,
+.reply small {
+  color: #95a5a6;
+  font-size: 0.85rem;
+}
+
+.reply {
+  margin-left: 30px;
+  background: #fafbfc;
+  border-left: 3px solid #bdc3c7;
+}
+
+/* --- Page Tabs (details/summary) --- */
+details.tab {
+  border-bottom: 1px solid #e8e8e5;
+  padding: 4px 8px;
+}
+
+details.tab:first-of-type {
+  border-top: 1px solid #e8e8e5;
+}
+
+details.tab summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 6px 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #2c3e50;
+  user-select: none;
+}
+
+details.tab summary::-webkit-details-marker {
+  display: none;
+}
+
+details.tab[open] summary {
+  color: #3498db;
+}
+
+/* --- Search Form --- */
+.search-form {
+  margin-bottom: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.search-form button {
+  padding: 6px 14px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.search-form button:hover {
+  background: #2980b9;
+}
+
+/* --- Comment & Reply Forms --- */
+.comment form,
+.tab > form {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.comment form input[type="text"],
+.tab > form input[type="text"] {
+  flex: 1;
+  padding: 5px 10px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.88rem;
+}
+
+.comment form button,
+.tab > form button {
+  padding: 5px 12px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+
+.comment form button:hover,
+.tab > form button:hover {
+  background: #2980b9;
+}
+
+/* Delete button sits apart from reply button */
+.comment form + form button {
+  background: none;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+}
+
+.comment form + form button:hover {
+  background: #fdf0ef;
+}
+
+/* --- Review Form --- */
+.review_box form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.review_box form p {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.review_box form input,
+.review_box form textarea {
+  padding: 6px 10px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.review_box form button {
+  align-self: flex-start;
+  padding: 6px 14px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.review_box form button:hover {
+  background: #2980b9;
+}
+
+/* --- Auth Pages (login / register) --- */
+.auth-box {
+  max-width: 420px;
+  margin: 3rem auto;
+  background: #fff;
+  border: 1px solid #e8e8e5;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.auth-box h2 {
+  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+  color: #1a1a1a;
+}
+
+.auth-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-box input {
+  padding: 8px 12px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.auth-box button {
+  padding: 8px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.auth-box button:hover {
+  background: #2980b9;
+}
+
+.auth-box a {
+  font-size: 0.88rem;
+  color: #3498db;
+  text-decoration: none;
+  margin-top: 6px;
+  display: inline-block;
+}
+
+.auth-box p.error {
+  color: #e74c3c;
+  font-size: 0.9rem;
+}
+/* --- Nav --- */
+nav {
+  background: #fff;
+  border-bottom: 1px solid #e8e8e5;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* --- Nav Logo --- */
+.nav-logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #3498db;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.nav-logo:hover {
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+/* --- Nav Search --- */
+.nav-search {
+  display: flex;
+  gap: 6px;
+}
+
+.nav-search input {
+  padding: 5px 10px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  width: 220px;
+}
+
+.nav-search button {
+  padding: 5px 12px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.nav-search button:hover {
+  background: #2980b9;
+}
+
+/* --- Nav Links --- */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #3498db;
+  font-size: 0.95rem;
+}
+
+.nav-links a:hover {
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.nav-links span {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* --- Sign Out --- */
+.nav-links form {
+  margin: 0;
+}
+
+.nav-links form button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #3498db;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.nav-links form button:hover {
+  opacity: 0.85;
+}
+.new-page-tab summary {
+  color: #3498db;
+}
+
+.new-page-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.new-page-form input[type="number"] {
+  width: 160px;
+  padding: 6px 10px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.new-page-form textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.new-page-form button {
+  align-self: flex-start;
+  padding: 6px 16px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.new-page-form button:hover {
+  background: #2980b9;
+}
+/* --- New Page Comment Form --- */
+.new-page-comment {
+  margin-top: 12px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #e8e8e5;
+  border-radius: 8px;
+}
+
+.new-page-comment form {
+  display: flex;
+  gap: 8px;
+}
+
+.new-page-comment input[type="number"] {
+  width: 130px;
+  padding: 5px 10px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.88rem;
+}
+
+.new-page-comment input[type="text"] {
+  flex: 1;
+  padding: 5px 10px;
+  border: 1px solid #e8e8e5;
+  border-radius: 6px;
+  font-size: 0.88rem;
+}
+
+.new-page-comment button {
+  padding: 5px 12px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+
+.new-page-comment button:hover {
+  background: #2980b9;
+}
+.comment.reply {
+  margin-left: 30px;
+  border-left: 3px solid #bdc3c7;
+  background: #fafbfc;
+}
+
+.reply-label {
+  display: block;
+  color: #95a5a6;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+
+.review-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 6px;
 }

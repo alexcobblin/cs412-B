@@ -1,0 +1,39 @@
+{% extends 'BookClub/base.html' %}
+{% block content %}
+
+<div class="book-card">
+  <div class="book-image-col">
+    {% if reader.reader_image_url %}
+      <img class="book-image" src="{{ reader.reader_image_url }}" alt="{{ reader.display_name }}">
+    {% else %}
+      <div class="book-image-placeholder">👤</div>
+    {% endif %}
+  </div>
+  <div>
+    <p class="book-title">{{ reader.display_name }}</p>
+    <p class="book-description">@{{ reader.username }}</p>
+    <p class="book-description">{{ reader.bio_text }}</p>
+    <small>Joined {{ reader.join_date|date:"F j, Y" }}</small>
+
+    {% if request.user == reader.user %}
+    <div style="margin-top: 10px;">
+      <a href="{% url 'update_reader' reader.pk %}" class="comment-trigger">Edit Profile</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="review_box">
+  <h3>Reviews by {{ reader.display_name }}</h3>
+  {% for review in reader_reviews %}
+  <div class="review">
+    <a href="{% url 'book' review.book.pk %}">{{ review.book.book_name }}</a>
+    <p>{{ review.text }}</p>
+    <small>{{ review.stars }} / 10</small>
+  </div>
+  {% empty %}
+  <p>No reviews yet.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}
