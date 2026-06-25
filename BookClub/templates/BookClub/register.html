@@ -1,17 +1,21 @@
 <!--
 BookClub/templates/BookClub/register.html 
-File: base.html
+File: register.html
 Author: Alex Cobb (alcobb@bu.edu), 5/25/2006
 Description: A signup form file to input login info
 -->
 {% extends 'BookClub/base.html' %}
 {% block content %}
-<h2>Sign Up</h2>
-<form method="POST">
-  {% csrf_token %}
-  {{ user_form.as_p }}
-  {{ reader_form.as_p }}
-  <button type="submit">Create Account</button>
-</form>
-<a href="{% url 'login' %}">Already have an account? Sign in</a>
+
+<div class="auth-box">
+  <h2>Sign Up</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ form.as_p }}
+    <button type="submit">Create Account</button>
+  </form>
+  <a href="{% url 'login' %}">Already have an account? Sign in</a>
+</div>
+
 {% endblock %}
