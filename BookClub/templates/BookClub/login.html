@@ -1,8 +1,13 @@
-<!-- login.html -->
+<!--
+BookClub/templates/BookClub/login.html 
+File: login.html
+Author: Alex Cobb (alcobb@bu.edu), 5/25/2006
+Description: A login form file to input login info
+-->
 {% extends 'BookClub/base.html' %}
 {% block content %}
 <h2>Sign In</h2>
-{% if error %}<p style="color:red">{{ error }}</p>{% endif %}
+{% if error %}<p>{{ error }}</p>{% endif %}
 <form method="POST">
   {% csrf_token %}
   <input type="text" name="username" placeholder="Username">

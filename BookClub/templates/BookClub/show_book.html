@@ -1,3 +1,9 @@
+<!--
+BookClub/templates/BookClub/show_book.html 
+File: show_book.html
+Author: Alex Cobb (alcobb@bu.edu), 5/25/2006
+Description: Shows a single book and all pages with comments and reviews
+-->
 {% extends 'BookClub/base.html' %}
 {% load page_extras %}
 {% block content %}
@@ -53,11 +59,11 @@
 </form>
 
 {% if reader %}
-<div class="new-page-comment">
-  <form method="POST" action="{% url 'create_comment' book.pk %}">
+<div class="search-form">
+  <form method="POST" action="{% url 'create_comment' book.pk %}" class="search-form new-page-comment">
     {% csrf_token %}
-    <input type="number" name="page_num" placeholder="Page number...">
-    <input type="text" name="text" placeholder="Add a comment...">
+    <input type="number" name="page_num" placeholder="Page...">
+    <textarea name="text" placeholder="Add a comment..." rows="1"></textarea>
     <input type="hidden" name="reply" value="">
     <button type="submit">Comment</button>
   </form>
@@ -73,16 +79,28 @@
     {% for comment in comments %}
 
     <div class="comment {% if comment.reply %}reply{% endif %}">
-      <strong>
-        <a href="{% url 'reader' comment.reader.pk %}">{{ comment.reader.display_name }}</a>
-      </strong>
-      {% if comment.reply %}
-      <small class="reply-label">↩ replying to {{ comment.reply.reader.display_name }}</small>
-      {% endif %}
-      <p>{{ comment.text }}</p>
-      <span>{{ comment.stylish_likes }} {{ comment.stylish_dislikes }}</span>
+  <strong>
+    <a href="{% url 'reader' comment.reader.pk %}">{{ comment.reader.display_name }}</a>
+  </strong>
+  {% if comment.reply %}
+    <small class="reply-label">↩ replying to {{ comment.reply.reader.display_name }}</small>
+    {% endif %}
+    <p>{{ comment.text }}</p>
 
+    <div class="comment-actions">
       {% if reader %}
+      <form method="POST" action="{% url 'like_comment' comment.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="like-btn {% if comment.pk in liked_comments %}active{% endif %}">
+        {{ comment.stylish_likes }}
+      </button>
+    </form>
+    <form method="POST" action="{% url 'dislike_comment' comment.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="dislike-btn {% if comment.pk in disliked_comments %}active{% endif %}">
+        {{ comment.stylish_dislikes }}
+      </button>
+    </form>
       <form method="POST" action="{% url 'create_comment' book.pk %}">
         {% csrf_token %}
         <input type="hidden" name="page_num" value="{{ comment.page_num }}">
@@ -90,6 +108,9 @@
         <input type="text" name="text" placeholder="Reply...">
         <button type="submit">Reply</button>
       </form>
+      {% else %}
+      <span>{{ comment.stylish_likes }} {{ comment.stylish_dislikes }}</span>
+      {% endif %}
 
       {% if comment.reader == reader %}
       <form method="POST" action="{% url 'delete_comment' comment.pk %}">
@@ -97,9 +118,8 @@
         <button type="submit" class="delete-btn">Delete</button>
       </form>
       {% endif %}
-      {% endif %}
-
     </div>
+  </div>
     {% empty %}
     <p>No comments on this page.</p>
     {% endfor %}

@@ -11,8 +11,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
+import requests
 
-from .models import Reader, Book, Comment, Review
+from .models import Reader, Book, Comment, Review, Like, Dislike
 from .forms import (
     CreateReaderForm,
     UpdateReaderForm,
@@ -125,7 +126,65 @@ class BookListView(ListView):
             )
 
         return Book.objects.all()
+    
+class BookSearchView(CustomLoginRequiredMixin, TemplateView):
+    '''Accesses the openlibrary API to retrieve the 3 most likely desired books.'''
+    template_name = 'BookClub/add_book.html'
 
+    def get_context_data(self, **kwargs):
+        
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('query', '')
+        results = []
+
+        if query:
+            try:
+                response = requests.get(
+                    'https://openlibrary.org/search.json',
+                    params={'q': query, 'limit': 3}
+                )
+                print(f"Status code: {response.status_code}")
+                print(f"Response: {response.json()}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    for doc in data.get('docs', []):
+                        cover_id = doc.get('cover_i')
+                        results.append({
+                            'title': doc.get('title', ''),
+                            'author': ', '.join(doc.get('author_name', ['Unknown'])),
+                            'description': doc.get('first_sentence', [''])[0] if doc.get('first_sentence') else '',
+                            'cover_url': f'https://covers.openlibrary.org/b/id/{cover_id}-M.jpg' if cover_id else '',
+                        })
+            except Exception as e:
+                print(f"API error: {e}")
+
+        print(f"Results: {results}")
+        context['query'] = query
+        context['results'] = results
+        return context
+
+    def post(self, request):
+        book = Book(
+            book_name=request.POST.get('book_name'),
+            author=request.POST.get('author'),
+            description=request.POST.get('description'),
+        )
+
+        cover_url = request.POST.get('cover_url')
+        if cover_url:
+            img_response = requests.get(cover_url)
+            if img_response.status_code == 200:
+                from django.core.files.base import ContentFile
+                filename = f"{book.book_name.replace(' ', '_')}.jpg"
+                book.image_file.save(
+                    filename,
+                    ContentFile(img_response.content),
+                    save=False
+                )
+
+        book.save()
+        return redirect('book', pk=book.pk)
 
 class AddBookView(CustomLoginRequiredMixin, CreateView):
     '''Create a new Book.'''
@@ -143,24 +202,22 @@ class AddBookView(CustomLoginRequiredMixin, CreateView):
 
 
 class BookDetailView(DetailView):
-    '''Display the details for a single Book.'''
-
+    '''View for showing a book. This view contains numerous context variables and
+    some page number logic. These are necessary to show and interact with the sheer
+    amount of information on each book's page.'''
     model = Book
     template_name = 'BookClub/show_book.html'
     context_object_name = 'book'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         book = self.get_object()
         search = self.request.GET.get('page_search', '')
-
         context['pages'] = [
             (page, book.get_comments_by_pgnum(page))
             for page in book.get_unique_page_nums()
             if search in str(page)
         ]
-
         context['search'] = search
         context['comment_form'] = CreateCommentForm()
         context['review_form'] = CreateReviewForm()
@@ -168,16 +225,23 @@ class BookDetailView(DetailView):
         if self.request.user.is_authenticated:
             try:
                 reader = Reader.objects.get(user=self.request.user)
-
                 context['reader'] = reader
                 context['reader_has_review'] = Review.objects.filter(
-                    reader=reader,
-                    book=book
+                    reader=reader, book=book
                 ).exists()
-
+                context['liked_comments'] = set(
+                    Like.objects.filter(reader=reader)
+                    .values_list('comment_id', flat=True)
+                )
+                context['disliked_comments'] = set(
+                    Dislike.objects.filter(reader=reader)
+                    .values_list('comment_id', flat=True)
+                )
             except Reader.DoesNotExist:
                 context['reader'] = None
                 context['reader_has_review'] = False
+                context['liked_comments'] = set()
+                context['disliked_comments'] = set()
 
         return context
 
@@ -291,6 +355,7 @@ class DeleteReviewView(CustomLoginRequiredMixin, TemplateView):
 # ------------------------------------------------------------------
 
 class ReaderDetailView(DetailView):
+    '''Shows the profile of a reader and allows for them to edit their info.'''
     model = Reader
     template_name = 'BookClub/reader.html'
     context_object_name = 'reader'
@@ -324,4 +389,65 @@ class UpdateReaderView(CustomLoginRequiredMixin, UpdateView):
         return reverse(
             'reader',
             kwargs={'pk': self.object.pk}
+        )
+
+class LikeCommentView(CustomLoginRequiredMixin, TemplateView):
+    '''Handle liking or unliking a Comment.'''
+
+    def dispatch(self, request, *args, **kwargs):
+
+        comment = Comment.objects.get(pk=self.kwargs['pk'])
+        reader = self.get_logged_in_reader()
+
+        existing = Like.objects.filter(
+            comment=comment,
+            reader=reader
+        )
+
+        if existing.exists():
+            existing.delete()
+        else:
+            Dislike.objects.filter(
+                comment=comment,
+                reader=reader
+            ).delete()
+
+            Like.objects.create(
+                comment=comment,
+                reader=reader
+            )
+
+        return redirect(
+            request.META.get('HTTP_REFERER', 'books')
+        )
+
+
+class DislikeCommentView(CustomLoginRequiredMixin, TemplateView):
+    '''Handle disliking or removing a dislike from a Comment.'''
+
+    def dispatch(self, request, *args, **kwargs):
+
+        comment = Comment.objects.get(pk=self.kwargs['pk'])
+        reader = self.get_logged_in_reader()
+
+        existing = Dislike.objects.filter(
+            comment=comment,
+            reader=reader
+        )
+
+        if existing.exists():
+            existing.delete()
+        else:
+            Like.objects.filter(
+                comment=comment,
+                reader=reader
+            ).delete()
+
+            Dislike.objects.create(
+                comment=comment,
+                reader=reader
+            )
+
+        return redirect(
+            request.META.get('HTTP_REFERER', 'books')
         )

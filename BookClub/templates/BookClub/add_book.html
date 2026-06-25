@@ -3,11 +3,42 @@
 
 <div class="auth-box">
   <h2>Add a Book</h2>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Book</button>
+
+  <form method="GET" class="search-form">
+    <input type="text" name="query" placeholder="Search for a book..." value="{{ query }}">
+    <button type="submit">Search</button>
   </form>
+
+  {% if results %}
+  <div class="book-results">
+    {% for result in results %}
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="book_name" value="{{ result.title }}">
+      <input type="hidden" name="author" value="{{ result.author }}">
+      <input type="hidden" name="cover_url" value="{{ result.cover_url }}">
+
+      <div class="book-result-card">
+        {% if result.cover_url %}
+        <img src="{{ result.cover_url }}" alt="{{ result.title }}">
+        {% else %}
+        <div class="book-image-placeholder">📖</div>
+        {% endif %}
+        <div>
+          <p class="book-title">{{ result.title }}</p>
+          <p class="book-description">{{ result.author }}</p>
+          <textarea name="description" placeholder="Add a description..." rows="3"></textarea>
+          <button type="submit">Add this Book</button>
+        </div>
+      </div>
+
+    </form>
+    {% endfor %}
+  </div>
+  {% elif query %}
+  <p>No results found for "{{ query }}".</p>
+  {% endif %}
+
 </div>
 
 {% endblock %}
